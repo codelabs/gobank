@@ -2,7 +2,9 @@ package sorting
 
 import "log/slog"
 
-func BubbleSort(list []int) {
+// BubbleSort is the simplest sorting algorithm that works by repeated swapping the adjacent elements if they are in
+// the wrong order.
+func BubbleSort[V int | float64](list []V) {
 
 	n := len(list)
 	slog.Info("list size", "size", n)
@@ -39,7 +41,7 @@ func BubbleSort(list []int) {
 }
 
 // swap exchanges values between two items.
-func swap(i, j *int) {
+func swap[V int | float64](i, j *V) {
 	temp := *i
 	*i = *j
 	*j = temp
