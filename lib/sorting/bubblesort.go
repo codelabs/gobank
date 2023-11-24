@@ -1,6 +1,9 @@
 package sorting
 
-import "log/slog"
+import (
+	"github.com/codelabs/gobank/lib/utils"
+	"log/slog"
+)
 
 // BubbleSort is the simplest sorting algorithm that works by repeated swapping the adjacent elements if they are in
 // the wrong order.
@@ -22,7 +25,7 @@ func BubbleSort[V int | float64](list []V) {
 
 			if list[j] > list[j+1] {
 
-				swap(&list[j], &list[j+1])
+				utils.Swap(&list[j], &list[j+1])
 				swapCounter++
 				swapped = true
 			}
@@ -38,11 +41,4 @@ func BubbleSort[V int | float64](list []V) {
 	if swapCounter == 0 {
 		slog.Warn("already sorted")
 	}
-}
-
-// swap exchanges values between two items.
-func swap[V int | float64](i, j *V) {
-	temp := *i
-	*i = *j
-	*j = temp
 }
