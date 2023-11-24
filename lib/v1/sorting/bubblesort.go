@@ -1,7 +1,7 @@
 package sorting
 
 import (
-	"github.com/codelabs/gobank/lib/utils"
+	"github.com/codelabs/gobank/lib/v1/utils"
 	"log/slog"
 )
 
