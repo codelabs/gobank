@@ -77,4 +77,25 @@ func TestNewSingleLinkedList(t *testing.T) {
 
 		list.Print()
 	})
+
+	t.Run("search an empty list", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		assert.Equal(t, false, list.Search(10))
+	})
+
+	t.Run("search for nonexistence item", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		for _, data := range []int{10, 20, 30, 40, 50} {
+			list.Insert(data)
+		}
+		assert.Equal(t, false, list.Search(60))
+	})
+
+	t.Run("search for an existing item", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		for _, data := range []int{10, 20, 30, 40, 50} {
+			list.Insert(data)
+		}
+		assert.Equal(t, true, list.Search(30))
+	})
 }

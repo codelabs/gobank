@@ -143,3 +143,28 @@ func (s *Single) InsertAt(data int, position int) error {
 	s.updateLength()
 	return nil
 }
+
+// Search ...
+func (s *Single) Search(data int) bool {
+	if s.IsEmpty() {
+		return false
+	}
+
+	node := s.head
+	found := false
+	for {
+
+		if node.data == data {
+			found = true
+			break
+		}
+
+		if node.next == nil {
+			break
+		}
+
+		node = node.next
+	}
+
+	return found
+}
