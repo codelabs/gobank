@@ -11,7 +11,7 @@ func TestNewSingleLinkedList(t *testing.T) {
 		list.Print()
 	})
 
-	t.Run("list with 5 elements", func(t *testing.T) {
+	t.Run("insert", func(t *testing.T) {
 		list := NewSingleLinkedList()
 		list.Insert(10)
 		list.Insert(20)
@@ -21,6 +21,60 @@ func TestNewSingleLinkedList(t *testing.T) {
 
 		assert.Equal(t, 5, list.Length())
 		assert.Equal(t, false, list.IsEmpty())
+		list.Print()
+	})
+
+	t.Run("insert at beginning", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Insert(20)
+		list.InsertAtBeginning(30)
+
+		assert.Equal(t, 3, list.Length())
+		list.Print()
+	})
+
+	t.Run("insert at position", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Insert(20)
+		list.InsertAtBeginning(30)
+		list.Print()
+
+		err := list.InsertAt(40, 3)
+		assert.Nil(t, err)
+
+		list.Print()
+		assert.Equal(t, 4, list.Length())
+
+		err = list.InsertAt(50, 5)
+		if assert.Error(t, err) {
+			assert.Equal(t, "invalid position, exceeded length of the list", err.Error())
+		}
+
+	})
+
+	t.Run("insert at position - empty list", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		if list.IsEmpty() {
+			err := list.InsertAt(10, 1)
+			if assert.Error(t, err) {
+				assert.Equal(t, "invalid position, exceeded length of the list", err.Error())
+			}
+		}
+	})
+
+	t.Run("insert at position - beginning", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Insert(20)
+		list.InsertAtBeginning(30)
+		list.Print()
+
+		err := list.InsertAt(40, 1)
+		assert.Nil(t, err)
+		assert.Equal(t, 4, list.Length())
+
 		list.Print()
 	})
 }
