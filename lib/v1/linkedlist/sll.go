@@ -34,12 +34,17 @@ func (s *Single) Length() int {
 
 // IsEmpty checks if the list is empty or not.
 func (s *Single) IsEmpty() bool {
-	return s.Length() == 0
+	return s.head == nil && s.Length() == 0
 }
 
-// updateLength updates the size of the list.
-func (s *Single) updateLength() {
+// incrementLength increases the size of the list by 1.
+func (s *Single) incrementLength() {
 	s.size++
+}
+
+// decrementLength decreases the size of the list by 1.
+func (s *Single) decrementLength() {
+	s.size--
 }
 
 // Insert inserts the data to the end of the list.
@@ -53,7 +58,7 @@ func (s *Single) Insert(data int) {
 	// First element
 	if s.IsEmpty() {
 		s.head = node
-		s.updateLength()
+		s.incrementLength()
 		return
 	}
 
@@ -65,7 +70,7 @@ func (s *Single) Insert(data int) {
 
 	// insert
 	lastNode.next = node
-	s.updateLength()
+	s.incrementLength()
 }
 
 // Print prints list to the console.
@@ -104,7 +109,7 @@ func (s *Single) InsertAtBeginning(data int) {
 	}
 
 	s.head = newNode
-	s.updateLength()
+	s.incrementLength()
 }
 
 // InsertAt inserts the data into a specified position.
@@ -140,11 +145,11 @@ func (s *Single) InsertAt(data int, position int) error {
 		next: node.next,
 	}
 	node.next = newNode
-	s.updateLength()
+	s.incrementLength()
 	return nil
 }
 
-// Search ...
+// Search searches for the specified data in the list.
 func (s *Single) Search(data int) bool {
 	if s.IsEmpty() {
 		return false
@@ -167,4 +172,38 @@ func (s *Single) Search(data int) bool {
 	}
 
 	return found
+}
+
+// DeleteAtEnd removes the last node from the list and returns it.
+func (s *Single) DeleteAtEnd() *Node {
+
+	// If list is empty, there is nothing to delete
+	if s.IsEmpty() {
+		return nil
+	}
+
+	// If there is only one element in the list, then set head to nil
+	if s.Length() == 1 {
+		node := s.head
+		s.head = nil
+		s.decrementLength()
+		return node
+	}
+
+	// If the list has more than 1 node, traverse to the penultimate node in the list.
+	node := s.head
+	count := 1
+
+	for {
+		if count == s.Length()-1 {
+			break
+		}
+		node = node.next
+		count++
+	}
+
+	deletedNode := node.next
+	node.next = nil
+	s.decrementLength()
+	return deletedNode
 }

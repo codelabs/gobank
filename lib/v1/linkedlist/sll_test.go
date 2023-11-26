@@ -98,4 +98,36 @@ func TestNewSingleLinkedList(t *testing.T) {
 		}
 		assert.Equal(t, true, list.Search(30))
 	})
+
+	t.Run("delete at the end - empty list", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Print()
+
+		deletedNode := list.DeleteAtEnd()
+		assert.Nil(t, deletedNode)
+	})
+
+	t.Run("delete at the end - list with 1 node", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+
+		deletedNode := list.DeleteAtEnd()
+		assert.Equal(t, 10, deletedNode.data)
+		assert.Equal(t, true, list.IsEmpty())
+		list.Print()
+	})
+
+	t.Run("delete at the end - list with more than one node", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Insert(20)
+		list.Insert(30)
+		list.Print()
+
+		deletedNode := list.DeleteAtEnd()
+		assert.Equal(t, 30, deletedNode.data)
+		assert.Nil(t, deletedNode.next)
+		assert.Equal(t, 2, list.Length())
+		list.Print()
+	})
 }
