@@ -130,4 +130,88 @@ func TestNewSingleLinkedList(t *testing.T) {
 		assert.Equal(t, 2, list.Length())
 		list.Print()
 	})
+
+	t.Run("delete at the beginning - empty list", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Print()
+		assert.Nil(t, list.DeleteAtBeginning())
+	})
+
+	t.Run("delete at the beginning - list with 1 node", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Print()
+
+		deleted := list.DeleteAtBeginning()
+		assert.Equal(t, 10, deleted.data)
+		assert.Nil(t, deleted.next)
+		assert.Equal(t, true, list.IsEmpty())
+	})
+
+	t.Run("delete at the beginning - list with more than 1 node", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Insert(20)
+		list.Insert(30)
+		list.Insert(40)
+		list.Print()
+
+		deleted := list.DeleteAtBeginning()
+		assert.Equal(t, 10, deleted.data)
+		assert.Nil(t, deleted.next)
+		assert.Equal(t, 3, list.Length())
+		list.Print()
+	})
+
+	t.Run("delete at position - invalid position", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Print()
+
+		deleted, err := list.DeleteAtPosition(2)
+		assert.Nil(t, deleted)
+		if assert.Error(t, err) {
+			assert.Equal(t, "invalid position, exceeded length of the list", err.Error())
+		}
+	})
+
+	t.Run("delete at position - empty list", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Print()
+
+		deleted, err := list.DeleteAtPosition(2)
+		assert.Nil(t, deleted)
+		if assert.Error(t, err) {
+			assert.Equal(t, "invalid position, exceeded length of the list", err.Error())
+		}
+	})
+
+	t.Run("delete at position - at beginning", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Print()
+
+		deleted, err := list.DeleteAtPosition(1)
+		assert.Nil(t, err)
+		assert.Equal(t, 10, deleted.data)
+		assert.Nil(t, deleted.next)
+		assert.Equal(t, true, list.IsEmpty())
+	})
+
+	t.Run("delete at position - at specified position", func(t *testing.T) {
+		list := NewSingleLinkedList()
+		list.Insert(10)
+		list.Insert(20)
+		list.Insert(30)
+		list.Insert(40)
+		list.Insert(50)
+		list.Print()
+
+		deleted, err := list.DeleteAtPosition(3)
+		assert.Nil(t, err)
+		assert.Equal(t, 30, deleted.data)
+		assert.Nil(t, deleted.next)
+		assert.Equal(t, 4, list.Length())
+		list.Print()
+	})
 }

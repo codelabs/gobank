@@ -75,7 +75,7 @@ func (s *Single) Insert(data int) {
 
 // Print prints list to the console.
 func (s *Single) Print() {
-	if s.head == nil {
+	if s.IsEmpty() {
 		fmt.Println("list is empty")
 		return
 	}
@@ -175,6 +175,7 @@ func (s *Single) Search(data int) bool {
 }
 
 // DeleteAtEnd removes the last node from the list and returns it.
+// Returns nil if list is empty.
 func (s *Single) DeleteAtEnd() *Node {
 
 	// If list is empty, there is nothing to delete
@@ -206,4 +207,62 @@ func (s *Single) DeleteAtEnd() *Node {
 	node.next = nil
 	s.decrementLength()
 	return deletedNode
+}
+
+// DeleteAtBeginning removes the node that head points to and returns it.
+// Returns nil if list is empty.
+func (s *Single) DeleteAtBeginning() *Node {
+	if s.IsEmpty() {
+		return nil
+	}
+
+	// If there is only one element in the list, then set head to nil
+	if s.Length() == 1 {
+		node := s.head
+		s.head = nil
+		s.decrementLength()
+		return node
+	}
+
+	// If more than 1 node exists
+	node := s.head
+	s.head = node.next
+	node.next = nil
+	s.decrementLength()
+	return node
+}
+
+// DeleteAtPosition removes the node at a given position and returns the node.
+// Sets the error, if invalid position is used or if list is empty.
+func (s *Single) DeleteAtPosition(position int) (*Node, error) {
+
+	if position > s.Length() {
+		return nil, errors.New("invalid position, exceeded length of the list")
+	}
+
+	if position == 1 {
+		node := s.DeleteAtBeginning()
+		return node, nil
+	}
+
+	// traverse to the node that is before to the specified position
+	node := s.head
+	count := 1
+	for {
+		if count == position-1 {
+			break
+		}
+		node = node.next
+		count++
+	}
+
+	nodeBeforePosition := node
+	nodeAtPosition := nodeBeforePosition.next
+	nodeAfterPosition := nodeAtPosition.next
+
+	nodeBeforePosition.next = nodeAfterPosition
+	nodeAtPosition.next = nil
+	s.decrementLength()
+
+	return nodeAtPosition, nil
 }
