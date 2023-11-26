@@ -5,17 +5,6 @@ import (
 	"fmt"
 )
 
-// Node represents a node in a linked list or tree or graphs
-type Node struct {
-	data int
-	next *Node
-}
-
-// Print prints a node.
-func (n *Node) Print() {
-	fmt.Printf("%d | %v\n", n.data, n.next)
-}
-
 // Single represents a single linked list.
 type Single struct {
 	size int
@@ -83,7 +72,7 @@ func (s *Single) Print() {
 	fmt.Printf("H -> %v\n", s.head)
 	node := s.head
 	for {
-		node.Print()
+		node.PrintSingleLL()
 		if node.next == nil {
 			break
 		}
