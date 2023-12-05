@@ -76,10 +76,7 @@ func (q *Queue[T]) Rear() T {
 func (q *Queue[T]) EnQueue(data T) {
 
 	// node to insert
-	node := &Node[T]{
-		data: data,
-		next: nil,
-	}
+	node := NewNode[T](data)
 
 	// If queue is empty, both front and rear point to same node.
 	if q.IsEmpty() {

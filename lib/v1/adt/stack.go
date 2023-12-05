@@ -36,10 +36,7 @@ func (s *Stack[T]) Top() T {
 // Push pushes new element to top of the stack.
 func (s *Stack[T]) Push(data T) {
 
-	node := &Node[T]{
-		data: data,
-		next: nil,
-	}
+	node := NewNode[T](data)
 
 	if s.IsEmpty() {
 		s.top = node

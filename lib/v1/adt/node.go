@@ -8,6 +8,15 @@ type Node[T any] struct {
 	next *Node[T]
 }
 
+// NewNode creates an instance of Node with the data provided.
+func NewNode[T any](data T) *Node[T] {
+	return &Node[T]{
+		data: data,
+		next: nil,
+	}
+}
+
+// Data returns the data from the Node.
 func (n *Node[T]) Data() T {
 	return n.data
 }
