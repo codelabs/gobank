@@ -52,17 +52,18 @@ func (s *Stack[T]) Push(data T) {
 }
 
 // Pop removes the top node from the stack and returns it.
-func (s *Stack[T]) Pop() (*Node[T], error) {
+func (s *Stack[T]) Pop() (T, error) {
 
 	if s.IsEmpty() {
-		return nil, errors.New("stack is empty")
+		var nothing T
+		return nothing, errors.New("stack is empty")
 	}
 
 	poppedNode := s.top
 	s.top = poppedNode.next
 	poppedNode.next = nil
 	s.size--
-	return poppedNode, nil
+	return poppedNode.Data(), nil
 }
 
 // Display prints the stack to the console.
