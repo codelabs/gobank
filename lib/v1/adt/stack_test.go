@@ -33,7 +33,7 @@ func TestNewStack(t *testing.T) {
 
 		popped, err := stack.Pop()
 		assert.Nil(t, err)
-		assert.Equal(t, 30, popped.Data())
+		assert.Equal(t, 30, popped)
 		assert.Equal(t, uint(2), stack.Size())
 		stack.Display()
 	})
@@ -44,7 +44,7 @@ func TestNewStack(t *testing.T) {
 		stack.Display()
 
 		popped, err := stack.Pop()
-		assert.Nil(t, popped)
+		assert.Equal(t, 0, popped)
 		if assert.Error(t, err) {
 			assert.Equal(t, "stack is empty", err.Error())
 		}
