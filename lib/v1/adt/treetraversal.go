@@ -6,10 +6,8 @@ import (
 )
 
 type Tree[T cmp.Ordered] struct {
-	root    *TreeNode[T]
-	current *TreeNode[T]
-	parent  *TreeNode[T]
-	level   int
+	root  *TreeNode[T]
+	level int
 }
 
 type TraversalType int
@@ -22,11 +20,7 @@ const (
 
 // NewBinaryTree creates an empty tree.
 func NewBinaryTree[T cmp.Ordered]() *Tree[T] {
-	return &Tree[T]{
-		root:    nil,
-		current: nil,
-		parent:  nil,
-	}
+	return &Tree[T]{root: nil}
 }
 
 func (t *Tree[T]) IsEmpty() bool {
@@ -44,19 +38,23 @@ func (t *Tree[T]) Insert(data T) {
 		return
 	}
 
-	t.current = t.root
+	var (
+		current              = t.root
+		parent  *TreeNode[T] = nil
+	)
+
 	for {
-		t.parent = t.current
-		if node.data < t.parent.data {
-			t.current = t.current.left
-			if t.current == nil {
-				t.parent.left = node
+		parent = current
+		if node.data < parent.data {
+			current = current.left
+			if current == nil {
+				parent.left = node
 				return
 			}
 		} else {
-			t.current = t.current.right
-			if t.current == nil {
-				t.parent.right = node
+			current = current.right
+			if current == nil {
+				parent.right = node
 				return
 			}
 		}
