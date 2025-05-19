@@ -1,10 +1,11 @@
 package applns
 
 import (
-	"github.com/stretchr/testify/assert"
 	"log/slog"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestOperatorPrecedence(t *testing.T) {
